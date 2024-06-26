@@ -138,10 +138,11 @@ task transfer_outputs {
       Array[File] kraken2_report_not_empty
       Array[File] kraken2_unclassified_read1_not_empty
       Array[File] kraken2_unclassified_read2_not_empty
-      String out_dir
+
+      Array[String] out_dir
     }
 
-    String outdirpath = sub(out_dir, "/$", "")
+    String outdirpath = sub(out_dir[0], "/$", "")
 
     command <<<
 
