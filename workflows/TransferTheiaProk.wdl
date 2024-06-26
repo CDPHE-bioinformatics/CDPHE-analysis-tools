@@ -43,7 +43,7 @@ workflow TransferTheiaProk {
         Array[File?] kraken2_report
         Array[File?] kraken2_unclassified_read1
         Array[File?] kraken2_unclassified_read2
-        String out_dir
+        Array[String] out_dir
     }
 
     call transfer_outputs {
