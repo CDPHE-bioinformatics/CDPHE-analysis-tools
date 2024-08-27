@@ -89,8 +89,6 @@ workflow TransferTheiaProk {
         	kraken2_unclassified_read1_not_empty = select_all(kraken2_unclassified_read1),
         	kraken2_unclassified_read2_not_empty = select_all(kraken2_unclassified_read2),
             out_dir = out_dir
-
-            Int disk_size = 100
     }
 
     output {
@@ -142,6 +140,7 @@ task transfer_outputs {
       Array[File] kraken2_unclassified_read2_not_empty
 
       Array[String] out_dir
+      Int disk_size = 100
     }
 
     String outdirpath = sub(out_dir[0], "/$", "")
