@@ -89,6 +89,8 @@ workflow TransferTheiaProk {
         	kraken2_unclassified_read1_not_empty = select_all(kraken2_unclassified_read1),
         	kraken2_unclassified_read2_not_empty = select_all(kraken2_unclassified_read2),
             out_dir = out_dir
+
+            Int disk_size = 100
     }
 
     output {
@@ -199,6 +201,7 @@ task transfer_outputs {
         docker: "theiagen/utility:1.0"
         memory: "16 GB"
         cpu: 4
-        disks: "local-disk 100 SSD"
+        disks: "local-disk " + disk_size + " SSD"
+        disk: disk_size + " GB"
     }
 }
