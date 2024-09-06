@@ -1,5 +1,8 @@
 version: 1.2
 workflows:
- - name: Kraken2_PE_transfer
-   subclass: WDL
-   primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
+name: Kraken2_PE_transfer
+  subclass: WDL
+  primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
+name: TransferTheiaProk
+  subclass: WDL
+  primaryDescriptorPath: /workflows/TransferTheiaProk.wdl
