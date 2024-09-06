@@ -3,91 +3,91 @@ version 1.0
 workflow TransferTheiaProk {
 
     input {
-        Array[File?] read1_clean
-        Array[File?] read2_clean
-        Array[File?] assembly_fasta
-        Array[File?] contigs_gfa
-        Array[File?] contigs_fastg
-        Array[File?] contigs_lastgraph
-        Array[File?] quast_report
-        Array[File?] cg_pipeline_report
-        Array[File?] busco_report
-        Array[File?] gambit_report
-        Array[File?] gambit_closest_genomes
-        Array[File?] ani_output_tsv
-        Array[File?] amrfinderplus_all_report
-        Array[File?] amrfinderplus_amr_report
-        Array[File?] amrfinderplus_stress_report
-        Array[File?] amrfinderplus_virulence_report
-        Array[File?] resfinder_pheno_table
-        Array[File?] resfinder_pheno_table_species
-        Array[File?] resfinder_seqs
-        Array[File?] resfinder_results
-        Array[File?] resfinder_pointfinder_pheno_table
-        Array[File?] resfinder_pointfinder_results
-        Array[File?] ts_mlst_results
-        Array[File?] prokka_gff
-        Array[File?] prokka_gbk
-        Array[File?] prokka_sqn
-        Array[File?] plasmidfinder_results
-        Array[File?] plasmidfinder_seqs
-        Array[File?] kleborate_output_file
-        Array[File?] legsta_results
-        Array[File?] pbptyper_pbptype_predicted_tsv
-        Array[File?] poppunk_gps_external_cluster_csv
-        Array[File?] midas_report
-        Array[File?] seroba_details
-        Array[File?] kraken2_classified_read1
-        Array[File?] kraken2_classified_read2
-        Array[File?] kraken2_classified_report
-        Array[File?] kraken2_report
-        Array[File?] kraken2_unclassified_read1
-        Array[File?] kraken2_unclassified_read2
-        Array[String] out_dir
-    }
+        File? read1_clean
+        File? read2_clean
+        File? assembly_fasta
+        File? contigs_gfa
+        File? contigs_fastg
+        File? contigs_lastgraph
+        File? quast_report
+        File? cg_pipeline_report
+        File? busco_report
+        File? gambit_report
+        File? gambit_closest_genomes
+        File? ani_output_tsv
+        File? amrfinderplus_all_report
+        File? amrfinderplus_amr_report
+        File? amrfinderplus_stress_report
+        File? amrfinderplus_virulence_report
+        File? resfinder_pheno_table
+        File? resfinder_pheno_table_species
+        File? resfinder_seqs
+        File? resfinder_results
+        File? resfinder_pointfinder_pheno_table
+        File? resfinder_pointfinder_results
+        File? ts_mlst_results
+        File? prokka_gff
+        File? prokka_gbk
+        File? prokka_sqn
+        File? plasmidfinder_results
+        File? plasmidfinder_seqs
+        File? kleborate_output_file
+        File? legsta_results
+        File? pbptyper_pbptype_predicted_tsv
+        File? poppunk_gps_external_cluster_csv
+        File? midas_report
+        File? seroba_details
+        File? kraken2_classified_read1
+        File? kraken2_classified_read2
+        File? kraken2_classified_report
+        File? kraken2_report
+        File? kraken2_unclassified_read1
+        File? kraken2_unclassified_read2
+        String out_dir
+    
 
     call transfer_outputs {
         input:
-            read1_clean_not_empty = select_all(read1_clean),
-            read2_clean_not_empty = select_all(read2_clean),
-            assembly_fasta_not_empty = select_all(assembly_fasta),
-            contigs_gfa_not_empty = select_all(contigs_gfa),
-            contigs_fastg_not_empty = select_all(contigs_fastg),
-            contigs_lastgraph_not_empty = select_all(contigs_lastgraph),
-            quast_report_not_empty = select_all(quast_report),
-            cg_pipeline_report_not_empty = select_all(cg_pipeline_report),
-            busco_report_not_empty = select_all(busco_report),
-            gambit_report_not_empty = select_all(gambit_report),
-            gambit_closest_genomes_not_empty = select_all(gambit_closest_genomes),
-            ani_output_tsv_not_empty = select_all(ani_output_tsv),
-            amrfinderplus_all_report_not_empty = select_all(amrfinderplus_all_report),
-            amrfinderplus_amr_report_not_empty = select_all(amrfinderplus_amr_report),
-            amrfinderplus_stress_report_not_empty = select_all(amrfinderplus_stress_report),
-            amrfinderplus_virulence_report_not_empty = select_all(amrfinderplus_virulence_report),
-            resfinder_pheno_table_not_empty = select_all(resfinder_pheno_table),
-            resfinder_pheno_table_species_not_empty = select_all(resfinder_pheno_table_species),
-            resfinder_seqs_not_empty = select_all(resfinder_seqs),
-            resfinder_results_not_empty = select_all(resfinder_results),
-            resfinder_pointfinder_pheno_table_not_empty = select_all(resfinder_pointfinder_pheno_table),
-            resfinder_pointfinder_results_not_empty = select_all(resfinder_pointfinder_results),
-            ts_mlst_results_not_empty = select_all(ts_mlst_results),
-            prokka_gff_not_empty = select_all(prokka_gff),
-            prokka_gbk_not_empty = select_all(prokka_gbk),
-            prokka_sqn_not_empty = select_all(prokka_sqn),
-            plasmidfinder_results_not_empty = select_all(plasmidfinder_results),
-            plasmidfinder_seqs_not_empty = select_all(plasmidfinder_seqs),
-            kleborate_output_file_not_empty = select_all(kleborate_output_file),
-            legsta_results_not_empty = select_all(legsta_results),
-            pbptyper_pbptype_predicted_tsv_not_empty = select_all(pbptyper_pbptype_predicted_tsv),
-            poppunk_gps_external_cluster_csv_not_empty = select_all(poppunk_gps_external_cluster_csv),
-            seroba_details_not_empty = select_all(seroba_details),
-            midas_report_not_empty = select_all(midas_report),
-            kraken2_classified_read1_not_empty = select_all(kraken2_classified_read1),
-        	kraken2_classified_read2_not_empty = select_all(kraken2_classified_read2),
-        	kraken2_classified_report_not_empty = select_all(kraken2_classified_report),
-        	kraken2_report_not_empty = select_all(kraken2_report),
-        	kraken2_unclassified_read1_not_empty = select_all(kraken2_unclassified_read1),
-        	kraken2_unclassified_read2_not_empty = select_all(kraken2_unclassified_read2),
+            read1_clean = read1_clean,
+            read2_clean = read2_clean,
+            assembly_fasta = assembly_fasta,
+            contigs_gfa = contigs_gfa,
+            contigs_fastg = contigs_fastg,
+            contigs_lastgraph = contigs_lastgraph,
+            quast_report = quast_report,
+            cg_pipeline_report = cg_pipeline_report,
+            busco_report = busco_report,
+            gambit_report = gambit_report,
+            gambit_closest_genomes = gambit_closest_genomes,
+            ani_output_tsv = ani_output_tsv,
+            amrfinderplus_all_report = amrfinderplus_all_report,
+            amrfinderplus_amr_report = amrfinderplus_amr_report,
+            amrfinderplus_stress_report = amrfinderplus_stress_report,
+            amrfinderplus_virulence_report = amrfinderplus_virulence_report,
+            resfinder_pheno_table = resfinder_pheno_table,
+            resfinder_pheno_table_species = resfinder_pheno_table_species,
+            resfinder_seqs = resfinder_seqs,
+            resfinder_results = resfinder_results,
+            resfinder_pointfinder_pheno_table = resfinder_pointfinder_pheno_table,
+            resfinder_pointfinder_results = resfinder_pointfinder_results,
+            ts_mlst_results = ts_mlst_results,
+            prokka_gff = prokka_gff,
+            prokka_gbk = prokka_gbk,
+            prokka_sqn = prokka_sqn,
+            plasmidfinder_results = plasmidfinder_results,
+            plasmidfinder_seqs = plasmidfinder_seqs,
+            kleborate_output_file = kleborate_output_file,
+            legsta_results = legsta_results,
+            pbptyper_pbptype_predicted_tsv = pbptyper_pbptype_predicted_tsv,
+            poppunk_gps_external_cluster_csv = poppunk_gps_external_cluster_csv,
+            seroba_details = seroba_details,
+            midas_report = midas_report,
+            kraken2_classified_read1 = kraken2_classified_read1,
+        	kraken2_classified_read2 = kraken2_classified_read2,
+        	kraken2_classified_report = kraken2_classified_report,
+        	kraken2_report = kraken2_report,
+        	kraken2_unclassified_read1 = kraken2_unclassified_read1,
+        	kraken2_unclassified_read2 = kraken2_unclassified_read2,
             out_dir = out_dir
     }
 
@@ -98,95 +98,94 @@ workflow TransferTheiaProk {
 
 task transfer_outputs {
     input {
-      Array[File] read1_clean_not_empty
-      Array[File] read2_clean_not_empty
-      Array[File] assembly_fasta_not_empty
-      Array[File] contigs_gfa_not_empty
-      Array[File] contigs_fastg_not_empty
-      Array[File] contigs_lastgraph_not_empty
-      Array[File] quast_report_not_empty
-      Array[File] cg_pipeline_report_not_empty
-      Array[File] busco_report_not_empty
-      Array[File] gambit_report_not_empty
-      Array[File] gambit_closest_genomes_not_empty
-      Array[File] ani_output_tsv_not_empty
-      Array[File] amrfinderplus_all_report_not_empty
-      Array[File] amrfinderplus_amr_report_not_empty
-      Array[File] amrfinderplus_stress_report_not_empty
-      Array[File] amrfinderplus_virulence_report_not_empty
-      Array[File] resfinder_pheno_table_not_empty
-      Array[File] resfinder_pheno_table_species_not_empty
-      Array[File] resfinder_seqs_not_empty
-      Array[File] resfinder_results_not_empty
-      Array[File] resfinder_pointfinder_pheno_table_not_empty
-      Array[File] resfinder_pointfinder_results_not_empty
-      Array[File] ts_mlst_results_not_empty
-      Array[File] prokka_gff_not_empty
-      Array[File] prokka_gbk_not_empty
-      Array[File] prokka_sqn_not_empty
-      Array[File] plasmidfinder_results_not_empty
-      Array[File] plasmidfinder_seqs_not_empty
-      Array[File] kleborate_output_file_not_empty
-      Array[File] legsta_results_not_empty
-      Array[File] pbptyper_pbptype_predicted_tsv_not_empty
-      Array[File] poppunk_gps_external_cluster_csv_not_empty
-      Array[File] seroba_details_not_empty
-      Array[File] midas_report_not_empty
-      Array[File] kraken2_classified_read1_not_empty
-      Array[File] kraken2_classified_read2_not_empty
-      Array[File] kraken2_classified_report_not_empty
-      Array[File] kraken2_report_not_empty
-      Array[File] kraken2_unclassified_read1_not_empty
-      Array[File] kraken2_unclassified_read2_not_empty
-
-      Array[String] out_dir
-      Int disk_size = 100
+      File read1_clean
+      File read2_clean
+      File assembly_fasta
+      File contigs_gfa
+      File contigs_fastg
+      File contigs_lastgraph
+      File quast_report
+      File cg_pipeline_report
+      File busco_report
+      File gambit_report
+      File gambit_closest_genomes
+      File ani_output_tsv
+      File amrfinderplus_all_report
+      File amrfinderplus_amr_report
+      File amrfinderplus_stress_report
+      File amrfinderplus_virulence_report
+      File resfinder_pheno_table
+      File resfinder_pheno_table_species
+      File resfinder_seqs
+      File resfinder_results
+      File resfinder_pointfinder_pheno_table
+      File resfinder_pointfinder_results
+      File ts_mlst_results
+      File prokka_gff
+      File prokka_gbk
+      File prokka_sqn
+      File plasmidfinder_results
+      File plasmidfinder_seqs
+      File kleborate_output_file
+      File legsta_results
+      File pbptyper_pbptype_predicted_tsv
+      File poppunk_gps_external_cluster_csv
+      File seroba_details
+      File midas_report
+      File kraken2_classified_read1
+      File kraken2_classified_read2
+      File kraken2_classified_report
+      File kraken2_report
+      File kraken2_unclassified_read1
+      File kraken2_unclassified_read2
+      String out_dir
+      Int disk_size = 8
     }
 
-    String outdirpath = sub(out_dir[0], "/$", "")
+    String outdirpath = sub(out_dir, "/$", "")
 
     command <<<
 
-        gsutil -m cp ~{sep=' ' read1_clean_not_empty} ~{outdirpath}/filtered_reads/
-        gsutil -m cp ~{sep=' ' read2_clean_not_empty} ~{outdirpath}/filtered_reads/
-        gsutil -m cp ~{sep=' ' assembly_fasta_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' contigs_gfa_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' contigs_fastg_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' contigs_lastgraph_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' quast_report_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' cg_pipeline_report_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' busco_report_not_empty} ~{outdirpath}/assembly_and_assemtly_qc/
-        gsutil -m cp ~{sep=' ' gambit_report_not_empty} ~{outdirpath}/taxon_id/
-        gsutil -m cp ~{sep=' ' gambit_closest_genomes_not_empty} ~{outdirpath}/taxon_id/
-        gsutil -m cp ~{sep=' ' ani_output_tsv_not_empty} ~{outdirpath}/ani-mummer/
-        gsutil -m cp ~{sep=' ' amrfinderplus_all_report_not_empty} ~{outdirpath}/amrfinderplus/
-        gsutil -m cp ~{sep=' ' amrfinderplus_amr_report_not_empty} ~{outdirpath}/amrfinderplus/
-        gsutil -m cp ~{sep=' ' amrfinderplus_stress_report_not_empty} ~{outdirpath}/amrfinderplus/
-        gsutil -m cp ~{sep=' ' amrfinderplus_virulence_report_not_empty} ~{outdirpath}/amrfinderplus/
-        gsutil -m cp ~{sep=' ' resfinder_pheno_table_not_empty} ~{outdirpath}/resfinder/
-        gsutil -m cp ~{sep=' ' resfinder_pheno_table_species_not_empty} ~{outdirpath}/resfinder/
-        gsutil -m cp ~{sep=' ' resfinder_seqs_not_empty} ~{outdirpath}/resfinder/
-        gsutil -m cp ~{sep=' ' resfinder_results_not_empty} ~{outdirpath}/resfinder/
-        gsutil -m cp ~{sep=' ' resfinder_pointfinder_pheno_table_not_empty} ~{outdirpath}/resfinder/
-        gsutil -m cp ~{sep=' ' resfinder_pointfinder_results_not_empty} ~{outdirpath}/resfinder/
-        gsutil -m cp ~{sep=' ' ts_mlst_results_not_empty} ~{outdirpath}/mlst/
-        gsutil -m cp ~{sep=' ' prokka_gff_not_empty} ~{outdirpath}/prokka/
-        gsutil -m cp ~{sep=' ' prokka_gbk_not_empty} ~{outdirpath}/prokka/
-        gsutil -m cp ~{sep=' ' prokka_sqn_not_empty} ~{outdirpath}/prokka/
-        gsutil -m cp ~{sep=' ' plasmidfinder_results_not_empty} ~{outdirpath}/plasmidfinder/
-        gsutil -m cp ~{sep=' ' plasmidfinder_seqs_not_empty} ~{outdirpath}/plasmidfinder/
-        gsutil -m cp ~{sep=' ' kleborate_output_file_not_empty} ~{outdirpath}/kleborate/
-        gsutil -m cp ~{sep=' ' legsta_results_not_empty} ~{outdirpath}/legsta/
-        gsutil -m cp ~{sep=' ' pbptyper_pbptype_predicted_tsv_not_empty} ~{outdirpath}/merlin_magic/
-        gsutil -m cp ~{sep=' ' poppunk_gps_external_cluster_csv_not_empty} ~{outdirpath}/merlin_magic/
-        gsutil -m cp ~{sep=' ' seroba_details_not_empty} ~{outdirpath}/merlin_magic/
-        gsutil -m cp ~{sep=' ' midas_report_not_empty} ~{outdirpath}/midas/
-        gsutil -m cp ~{sep=' ' kraken2_classified_read1_not_empty} ~{outdirpath}/kraken2/
-        gsutil -m cp ~{sep=' ' kraken2_classified_read2_not_empty} ~{outdirpath}/kraken2/
-        gsutil -m cp ~{sep=' ' kraken2_classified_report_not_empty} ~{outdirpath}/kraken2/
-        gsutil -m cp ~{sep=' ' kraken2_report_not_empty} ~{outdirpath}/kraken2/
-        gsutil -m cp ~{sep=' ' kraken2_unclassified_read1_not_empty} ~{outdirpath}/kraken2/
-        gsutil -m cp ~{sep=' ' kraken2_unclassified_read2_not_empty} ~{outdirpath}/kraken2/
+        gsutil -m cp ~{read1_clean} ~{outdirpath}/filtered_reads/
+        gsutil -m cp ~{read2_clean} ~{outdirpath}/filtered_reads/
+        gsutil -m cp ~{assembly_fasta} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{contigs_gfa} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{contigs_fastg} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{contigs_lastgraph} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{quast_report} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{cg_pipeline_report} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{busco_report} ~{outdirpath}/assembly_and_assemtly_qc/
+        gsutil -m cp ~{gambit_report} ~{outdirpath}/taxon_id/
+        gsutil -m cp ~{gambit_closest_genomes} ~{outdirpath}/taxon_id/
+        gsutil -m cp ~{ani_output_tsv} ~{outdirpath}/ani-mummer/
+        gsutil -m cp ~{amrfinderplus_all_report} ~{outdirpath}/amrfinderplus/
+        gsutil -m cp ~{amrfinderplus_amr_report} ~{outdirpath}/amrfinderplus/
+        gsutil -m cp ~{amrfinderplus_stress_report} ~{outdirpath}/amrfinderplus/
+        gsutil -m cp ~{amrfinderplus_virulence_report} ~{outdirpath}/amrfinderplus/
+        gsutil -m cp ~{resfinder_pheno_table} ~{outdirpath}/resfinder/
+        gsutil -m cp ~{resfinder_pheno_table_species} ~{outdirpath}/resfinder/
+        gsutil -m cp ~{resfinder_seqs} ~{outdirpath}/resfinder/
+        gsutil -m cp ~{resfinder_results} ~{outdirpath}/resfinder/
+        gsutil -m cp ~{resfinder_pointfinder_pheno_table} ~{outdirpath}/resfinder/
+        gsutil -m cp ~{resfinder_pointfinder_results} ~{outdirpath}/resfinder/
+        gsutil -m cp ~{ts_mlst_results} ~{outdirpath}/mlst/
+        gsutil -m cp ~{prokka_gff} ~{outdirpath}/prokka/
+        gsutil -m cp ~{prokka_gbk} ~{outdirpath}/prokka/
+        gsutil -m cp ~{prokka_sqn} ~{outdirpath}/prokka/
+        gsutil -m cp ~{plasmidfinder_results} ~{outdirpath}/plasmidfinder/
+        gsutil -m cp ~{plasmidfinder_seqs} ~{outdirpath}/plasmidfinder/
+        gsutil -m cp ~{kleborate_output_file} ~{outdirpath}/kleborate/
+        gsutil -m cp ~{legsta_results} ~{outdirpath}/legsta/
+        gsutil -m cp ~{pbptyper_pbptype_predicted_tsv} ~{outdirpath}/merlin_magic/
+        gsutil -m cp ~{poppunk_gps_external_cluster_csv} ~{outdirpath}/merlin_magic/
+        gsutil -m cp ~{seroba_details} ~{outdirpath}/merlin_magic/
+        gsutil -m cp ~{midas_report} ~{outdirpath}/midas/
+        gsutil -m cp ~{kraken2_classified_read1} ~{outdirpath}/kraken2/
+        gsutil -m cp ~{kraken2_classified_read2} ~{outdirpath}/kraken2/
+        gsutil -m cp ~{kraken2_classified_report} ~{outdirpath}/kraken2/
+        gsutil -m cp ~{kraken2_report} ~{outdirpath}/kraken2/
+        gsutil -m cp ~{kraken2_unclassified_read1} ~{outdirpath}/kraken2/
+        gsutil -m cp ~{kraken2_unclassified_read2} ~{outdirpath}/kraken2/
 
         transferdate=`date`
         echo $transferdate | tee TRANSFERDATE
@@ -198,9 +197,8 @@ task transfer_outputs {
 
     runtime {
         docker: "theiagen/utility:1.0"
-        memory: "16 GB"
-        cpu: 4
+        cpu: 2
         disks: "local-disk " + disk_size + " SSD"
         disk: disk_size + " GB"
-    }
+    }   
 }
