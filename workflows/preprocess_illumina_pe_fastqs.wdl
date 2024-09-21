@@ -72,7 +72,9 @@ workflow preprocess_illumina_pe_fastqs {
         File fastqc2_html_cleaned = fastqc_cleaned.fastqc2_html
         File fastqc2_zip_cleaned = fastqc_cleaned.fastqc2_zip
 
-
+        # versions
+        String version_fastqc = fastqc_raw.version
+        String version_seqyclean = seqyclean.version 
     }
 
 }
@@ -92,7 +94,7 @@ task fastqc {
 
     command <<<
 
-    fastqc --version | tee version
+    fastqc --version | tee VERSION
 
     # run fastqc
     fastqc --outdir $PWD ~{fastq_1} ~{fastq_2}
@@ -104,7 +106,7 @@ task fastqc {
         File fastqc1_zip = "~{fastq_1_basename}_fastqc.zip"
         File fastqc2_html = "~{fastq_2_basename}_fastqc.html"
         File fastqc2_zip = "~{fastq_2_basename}_fastqc.zip"
-        String fastqc_version = read_string("VERSION")
+        String version = read_string("VERSION")
     }
 
     runtime{
@@ -145,6 +147,7 @@ task seqyclean {
         File fastq_1_cleaned = "${sample_name}_clean_PE1.fastq.gz"
         File fastq_2_cleaned = "${sample_name}_clean_PE2.fastq.gz"
         File seqyclean_summary = "${sample_name}_clean_SummaryStatistics.tsv"
+        String version = read_string("VERSION")
 
 
     }
