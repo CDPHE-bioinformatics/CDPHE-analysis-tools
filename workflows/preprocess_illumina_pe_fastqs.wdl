@@ -49,6 +49,8 @@ workflow preprocess_illumina_pe_fastqs {
         fastqc2_zip_raw = fastqc_raw.fastqc2_zip,
 
         seqyclean_summary = seqyclean.seqyclean_summary,
+        fastq_1_cleaned = seqyclean.fastq_1_cleaned,
+        fastq_2_cleaned = seqyclean.fastq_2_cleaned,
 
         fastqc1_html_cleaned = fastqc_cleaned.fastqc1_html,
         fastqc1_zip_cleaned = fastqc_cleaned.fastqc1_zip,
@@ -66,6 +68,9 @@ workflow preprocess_illumina_pe_fastqs {
         File fastqc2_zip_raw = fastqc_raw.fastqc2_zip
 
         File seqyclean_summary = seqyclean.seqyclean_summary
+        File fastq_1_cleaned = seqyclean.fastq_1_cleaned
+        File fastq_2_cleaned = seqyclean.fastq_2_cleaned
+
 
         File fastqc1_html_cleaned = fastqc_cleaned.fastqc1_html
         File fastqc1_zip_cleaned = fastqc_cleaned.fastqc1_zip
@@ -175,6 +180,8 @@ task transfer{
         File fastqc2_zip_raw
 
         File seqyclean_summary 
+        File fastq_1_cleaned
+        File fastq_2_cleaned
 
         File fastqc1_html_cleaned 
         File fastqc1_zip_cleaned 
@@ -197,6 +204,8 @@ task transfer{
 
         # transfter seqyclean
         gsutil -m cp ~{seqyclean_summary} ~{transfer_path_2}/seqyclean/
+        gsutil -m cp ~{fastq_1_cleaned} ~{transfer_path_2}/seqyclean/
+        gsutil -m cp ~{fasteq_2_cleaned} ~{transfer_path_2}/seqyclean/
 
         # transfer fastqc clean
         gsutil -m cp ~{fastqc1_html_cleaned} ~{transfer_path_2}/fastqc_cleaned/
