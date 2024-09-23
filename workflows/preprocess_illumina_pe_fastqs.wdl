@@ -205,7 +205,7 @@ task transfer{
         # transfter seqyclean
         gsutil -m cp ~{seqyclean_summary} ~{transfer_path_2}/seqyclean/
         gsutil -m cp ~{fastq_1_cleaned} ~{transfer_path_2}/seqyclean/
-        gsutil -m cp ~{fasteq_2_cleaned} ~{transfer_path_2}/seqyclean/
+        gsutil -m cp ~{fastq_2_cleaned} ~{transfer_path_2}/seqyclean/
 
         # transfer fastqc clean
         gsutil -m cp ~{fastqc1_html_cleaned} ~{transfer_path_2}/fastqc_cleaned/
