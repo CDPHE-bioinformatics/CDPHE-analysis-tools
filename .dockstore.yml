@@ -6,3 +6,6 @@ workflows:
  - name: TransferTheiaProk
    subclass: WDL
    primaryDescriptorPath: /workflows/TransferTheiaProk.wdl
+ - name: Preprocess_illumina_pe_fastqs
+   subclass: WDL
+   primaryDescriptorPath: /workflows/preprocess_illumina_pe_fastqs.wdl
