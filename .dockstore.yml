@@ -3,9 +3,15 @@ workflows:
  - name: Kraken2_PE_transfer
    subclass: WDL
    primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
+ - name: Kraken2_SE_transfer
+   subclass: WDL
+   primaryDescriptorPath: /workflows/Kraken2_SE_transfer.wdl
  - name: TransferTheiaProk
    subclass: WDL
    primaryDescriptorPath: /workflows/TransferTheiaProk.wdl
  - name: preprocess_illumina_pe_fastqs
    subclass: WDL
    primaryDescriptorPath: /workflows/preprocess_illumina_pe_fastqs.wdl
+  - name: TransferPhoenix
+   subclass: WDL
+   primaryDescriptorPath: /workflows/TransferPhoenix.wdl
