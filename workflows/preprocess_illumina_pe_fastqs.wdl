@@ -144,7 +144,7 @@ task seqyclean {
     # pull version out of the summary file
     awk 'NR==2 {print $1}' ~{sample_name}_clean_SummaryStatistics.tsv | tee VERSION
 
-    seqyclean -minlen 70 -qual 30 30 -gz -1 ~{fastq_1} -2 ~{fastq_2} -c ~{contam_fasta} -o ~{sample_name}_clean
+    seqyclean -minlen 20 -qual 30 30 -gz -1 ~{fastq_1} -2 ~{fastq_2} -c ~{contam_fasta} -o ~{sample_name}_clean
 
     >>>
     output {
