@@ -165,7 +165,7 @@ task fastp {
         File fastq_1_cleaned = "~{sample_name}_1P.fastq.gz"
         File fastq_2_cleaned = "~{sample_name}_2P.fastq.gz"
         File fastq_1_unpaired = "~{sample_name}_1U.fastq.gz"
-        File fastq_2_unpaired = "~{sample_name}_.2U.fastq.gz"
+        File fastq_2_unpaired = "~{sample_name}_2U.fastq.gz"
         File fastp_html = "~{sample_name}_fastp.html"
         File fastp_json = "~{sample_name}_fastp.json"
         String version = read_string("VERSION")
