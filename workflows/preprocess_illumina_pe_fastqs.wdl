@@ -173,8 +173,8 @@ task fastp {
 
     runtime {
         docker: docker
-        memory: "2 GiB"
-        cpu: 2
+        memory: "8 GiB"
+        cpu: 4
         disks: "local-disk 100 SSD"
         preemptible: 0
         maxRetries: 3
