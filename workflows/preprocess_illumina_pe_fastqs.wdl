@@ -82,7 +82,7 @@ workflow preprocess_illumina_pe_fastqs {
 
         # versions
         String version_fastqc = fastqc_raw.version
-        String version_seqyclean = seqyclean.version 
+        String version_fastp = fastp.version 
     }
 
 }
@@ -145,7 +145,7 @@ task fastp {
 
     fastp \
     --in1 ~{fastq_1} \
-    --in2 ~{fastq_2)\
+    --in2 ~{fastq_2} \
     --out1 ~{sample_name}_1P.fastq.gz \
     --out2 ~{sample_name}_2P.fastq.gz \
     --unpaired1 ~{sample_name}_1U.fastq.gz \
@@ -162,12 +162,13 @@ task fastp {
     >>>
 
     output{
-        fastq_1_cleaned = "~{sample_name}_1P.fastq.gz"
-        fastq_2_cleaned = "~{sample_name}_2P.fastq.gz"
-        fastq_1_unpaired = "~{sample_name}_1U.fastq.gz"
-        fastq_2_unpaired = "~{sample_name}_.2U.fastq.gz"
-        fastp_html = "~{sample_name}_fastp.html"
-        fastp_json = "~{sample_name}_fastp.json"
+        File fastq_1_cleaned = "~{sample_name}_1P.fastq.gz"
+        File fastq_2_cleaned = "~{sample_name}_2P.fastq.gz"
+        File fastq_1_unpaired = "~{sample_name}_1U.fastq.gz"
+        File fastq_2_unpaired = "~{sample_name}_.2U.fastq.gz"
+        File fastp_html = "~{sample_name}_fastp.html"
+        File fastp_json = "~{sample_name}_fastp.json"
+        String version = read_string("VERSION")
     }
 
     runtime {
@@ -180,10 +181,6 @@ task fastp {
   }
 }
 
-
-
-
-}
 
 task transfer{
     input{
