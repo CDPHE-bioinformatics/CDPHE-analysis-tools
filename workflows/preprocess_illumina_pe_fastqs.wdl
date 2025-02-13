@@ -6,7 +6,6 @@ workflow preprocess_illumina_pe_fastqs {
         String sample_name
         File fastq_1
         File fastq_2
-        File contam_fasta
         String transfer_path
     }
 
@@ -21,20 +20,18 @@ workflow preprocess_illumina_pe_fastqs {
 
     }
 
-    call seqyclean {
+    call fastp {
         input:
-            contam_fasta = contam_fasta,
-            sample_name = sample_name,
-            fastq_1 = fastq_1,
-            fastq_2 = fastq_2
-
+        fastq_1 = fastq_1,
+        fastq_2 = fastq_2,
+        sample_name = sample_name
 
     }
 
     call fastqc as fastqc_cleaned {
         input:
-            fastq_1 = seqyclean.fastq_1_cleaned,
-            fastq_2 = seqyclean.fastq_2_cleaned
+            fastq_1 = fastp.fastq_1_cleaned,
+            fastq_2 = fastp.fastq_2_cleaned
 
     }
 
@@ -48,9 +45,12 @@ workflow preprocess_illumina_pe_fastqs {
         fastqc2_html_raw = fastqc_raw.fastqc2_html,
         fastqc2_zip_raw = fastqc_raw.fastqc2_zip,
 
-        seqyclean_summary = seqyclean.seqyclean_summary,
-        fastq_1_cleaned = seqyclean.fastq_1_cleaned,
-        fastq_2_cleaned = seqyclean.fastq_2_cleaned,
+        fastq_1_cleaned = fastp.fastq_1_cleaned,
+        fastq_2_cleaned = fastp.fastq_2_cleaned,
+        fastq_1_unpaired = fastp.fastq_1_unpaired,
+        fastq_2_unpaired = fastp.fastq_2_unpaired,
+        fastp_html = fastp.fastp_html,
+        fastp_json = fastp.fastp_json,
 
         fastqc1_html_cleaned = fastqc_cleaned.fastqc1_html,
         fastqc1_zip_cleaned = fastqc_cleaned.fastqc1_zip,
@@ -67,9 +67,12 @@ workflow preprocess_illumina_pe_fastqs {
         File fastqc2_html_raw = fastqc_raw.fastqc2_html
         File fastqc2_zip_raw = fastqc_raw.fastqc2_zip
 
-        File seqyclean_summary = seqyclean.seqyclean_summary
-        File fastq_1_cleaned = seqyclean.fastq_1_cleaned
-        File fastq_2_cleaned = seqyclean.fastq_2_cleaned
+        File fastq_1_cleaned = fastp.fastq_1_cleaned
+        File fastq_2_cleaned = fastp.fastq_2_cleaned
+        File fastq_1_unpaired = fastp.fastq_1_unpaired
+        File fastq_2_unpaired = fastp.fastq_2_unpaired
+        File fastp_html = fastp.fastp_html
+        File fastp_json = fastp.fastp_json
 
 
         File fastqc1_html_cleaned = fastqc_cleaned.fastqc1_html
@@ -127,44 +130,57 @@ task fastqc {
 
 }
 
-task seqyclean {
-
+task fastp {
     input {
-        File contam_fasta
-        String sample_name
         File fastq_1
         File fastq_2
-
+        String sample_name
     }
 
-    String docker = "staphb/seqyclean:1.10.09"
+    String docker = "staphb/fastp:0.23.2"
 
     command <<<
 
-    # pull version out of the summary file
-    awk 'NR==2 {print $1}' ~{sample_name}_clean_SummaryStatistics.tsv | tee VERSION
+    fastp --version | tee VERSION
 
-    seqyclean -minlen 70 -qual 30 30 -gz -1 ~{fastq_1} -2 ~{fastq_2} -c ~{contam_fasta} -o ~{sample_name}_clean
+    fastp \
+    --in1 ~{fastq_1} \
+    --in2 ~{fastq_2)\
+    --out1 ~{sample_name}_1P.fastq.gz \
+    --out2 ~{sample_name}_2P.fastq.gz \
+    --unpaired1 ~{sample_name}_1U.fastq.gz \
+    --unpaired2 ~{sample_name}_2U.fastq.gz \
+    --cut_tail \
+    --cut_tail_window_size 4 \
+    --cut_tail_mean_quality 30 \
+    --length_required 70 \
+    --detect_adapter_for_pe \
+    --trim_poly_g \
+    --html ~{sample_name}_fastp.html \
+    --json ~{sample_name}_fastp.json
 
     >>>
-    output {
-        String seqyclean_version = read_string("VERSION")
-        File fastq_1_cleaned = "${sample_name}_clean_PE1.fastq.gz"
-        File fastq_2_cleaned = "${sample_name}_clean_PE2.fastq.gz"
-        File seqyclean_summary = "${sample_name}_clean_SummaryStatistics.tsv"
-        String version = read_string("VERSION")
 
-
+    output{
+        fastq_1_cleaned = "~{sample_name}_1P.fastq.gz"
+        fastq_2_cleaned = "~{sample_name}_2P.fastq.gz"
+        fastq_1_unpaired = "~{sample_name}_1U.fastq.gz"
+        fastq_2_unpaired = "~{sample_name}_.2U.fastq.gz"
+        fastp_html = "~{sample_name}_fastp.html"
+        fastp_json = "~{sample_name}_fastp.json"
     }
-    runtime{
+
+    runtime {
         docker: docker
         memory: "2 GiB"
         cpu: 2
         disks: "local-disk 100 SSD"
         preemptible: 0
         maxRetries: 3
+  }
+}
 
-    }
+
 
 
 }
@@ -178,10 +194,13 @@ task transfer{
         File fastqc1_zip_raw
         File fastqc2_html_raw
         File fastqc2_zip_raw
-
-        File seqyclean_summary 
+        
         File fastq_1_cleaned
         File fastq_2_cleaned
+        File fastq_1_unpaired
+        File fastq_2_unpaired
+        File fastp_html
+        File fastp_json
 
         File fastqc1_html_cleaned 
         File fastqc1_zip_cleaned 
@@ -202,10 +221,14 @@ task transfer{
         gsutil -m cp ~{fastqc2_html_raw} ~{transfer_path_2}/fastqc_raw/
         gsutil -m cp ~{fastqc2_zip_raw} ~{transfer_path_2}/fastqc_raw/
 
-        # transfter seqyclean
-        gsutil -m cp ~{seqyclean_summary} ~{transfer_path_2}/seqyclean/
-        gsutil -m cp ~{fastq_1_cleaned} ~{transfer_path_2}/seqyclean/
-        gsutil -m cp ~{fastq_2_cleaned} ~{transfer_path_2}/seqyclean/
+        # transfter fastp
+        gsutil -m cp ~{fastq_1_cleaned} ~{transfer_path_2}/fastp/
+        gsutil -m cp ~{fastq_2_cleaned} ~{transfer_path_2}/fastp/
+        gsutil -m cp ~{fastq_1_unpaired} ~{transfer_path_2}/fastp/
+        gsutil -m cp ~{fastq_2_unpaired} ~{transfer_path_2}/fastp/
+        gsutil -m cp ~{fastp_html} ~{transfer_path_2}/fastp/
+        gsutil -m cp ~{fastp_json} ~{transfer_path_2}/fastp/
+
 
         # transfer fastqc clean
         gsutil -m cp ~{fastqc1_html_cleaned} ~{transfer_path_2}/fastqc_cleaned/
