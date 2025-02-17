@@ -12,7 +12,7 @@ workflows:
  - name: preprocess_illumina_pe_fastqs
    subclass: WDL
    primaryDescriptorPath: /workflows/preprocess_illumina_pe_fastqs.wdl
- - name: preprocess_illumina_pe_fastqs
+ - name: TransferPhoenix
    subclass: WDL
    primaryDescriptorPath: /workflows/TransferPhoenix.wdl
  - name: TheiaCov_mpox_transfer
