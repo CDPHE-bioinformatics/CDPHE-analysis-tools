@@ -18,3 +18,7 @@ workflows:
  - name: TheiaCov_mpox_transfer
    subclass: WDL
    primaryDescriptorPath: /workflows/TheiaCov_mpox_transfer.wdl
+   primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
+ - name: Kraken2_PE_transfer
+   subclass: WDL
+   primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
