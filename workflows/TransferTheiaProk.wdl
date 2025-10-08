@@ -3,8 +3,6 @@ version 1.0
 workflow TransferTheiaProk {
 
     input {
-        File? read1_clean
-        File? read2_clean
         File? assembly_fasta
         File? contigs_gfa
         File? contigs_fastg
@@ -48,8 +46,6 @@ workflow TransferTheiaProk {
 
     call transfer_outputs {
         input:
-            read1_clean = read1_clean,
-            read2_clean = read2_clean,
             assembly_fasta = assembly_fasta,
             contigs_gfa = contigs_gfa,
             contigs_fastg = contigs_fastg,
@@ -98,8 +94,6 @@ workflow TransferTheiaProk {
 
 task transfer_outputs {
     input {
-      File? read1_clean
-      File? read2_clean
       File? assembly_fasta
       File? contigs_gfa
       File? contigs_fastg
@@ -146,8 +140,6 @@ task transfer_outputs {
 
     command <<<
 
-        gsutil -m cp ~{read1_clean} ~{outdirpath}/filtered_reads/
-        gsutil -m cp ~{read2_clean} ~{outdirpath}/filtered_reads/
         gsutil -m cp ~{assembly_fasta} ~{outdirpath}/assembly_and_assemtly_qc/
         gsutil -m cp ~{contigs_gfa} ~{outdirpath}/assembly_and_assemtly_qc/
         gsutil -m cp ~{contigs_fastg} ~{outdirpath}/assembly_and_assemtly_qc/
