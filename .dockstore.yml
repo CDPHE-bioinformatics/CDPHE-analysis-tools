@@ -1,5 +1,8 @@
 version: 1.2
 workflows:
+ - name: Kraken2_PE_minimal
+   subclass: WDL
+   primaryDescriptorPath: /workflows/kraken2_pe_minimal.wdl
  - name: Kraken2_PE_transfer
    subclass: WDL
    primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
