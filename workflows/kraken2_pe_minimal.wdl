@@ -13,7 +13,7 @@ workflow kraken2_pe_minimal_wf {
     File read2
     File kraken2_db
   }
-  call kraken2 {
+  call kraken2 as kraken2_pe {
     input:
       samplename = samplename,
       read1 = read1,
