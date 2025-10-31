@@ -4,11 +4,11 @@ workflow Kraken2_PE_transfer {
 
     input {
         File kraken2_report
-        File kraken2_classified_report
-        File kraken2_classified_read1
-        File kraken2_unclassified_read1
-        File kraken2_classified_read2
-        File kraken2_unclassified_read2
+        File? kraken2_classified_report
+        File? kraken2_classified_read1
+        File? kraken2_unclassified_read1
+        File? kraken2_classified_read2
+        File? kraken2_unclassified_read2
         File krona_html
         String out_dir
     }
@@ -34,16 +34,23 @@ task transfer_outputs {
     input {
         String out_dir
         File kraken2_report
-        File kraken2_classified_report
-        File kraken2_unclassified_read1
-        File kraken2_classified_read1
-        File kraken2_unclassified_read2
-        File kraken2_classified_read2
-        File krona_html
+        File? kraken2_classified_report
+        File? kraken2_unclassified_read1
+        File? kraken2_classified_read1
+        File? kraken2_unclassified_read2
+        File? kraken2_classified_read2
+        File? krona_html
 
     }
 
     String out_dir_path = sub(out_dir, "/$", "")
+    Int disk_size = 30 + ceil(
+        size(kraken2_classified_report, "GB")
+        + size(kraken2_unclassified_read1, "GB")
+        + size(kraken2_classified_read1, "GB")
+        + size(kraken2_unclassified_read2, "GB")
+        + size(kraken2_classified_read2, "GB")
+    )
 
     command <<<
         
@@ -66,7 +73,7 @@ task transfer_outputs {
     runtime {
         docker: "theiagen/utility:1.0"
         memory: "8 GB"
-        cpu: 16
-        disks: "local-disk 500 SSD"
+        cpu: 4
+        disks: "local-disk " + disk_size + " SSD"
     }
 }
