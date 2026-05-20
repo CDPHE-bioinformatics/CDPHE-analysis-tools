@@ -49,8 +49,8 @@ task kraken2 {
     Int cpu = 4
   }
 
-  Int disk_size = ceil(size(read1, "GB") + size(read2, "GB") + 2*size(kraken2_db, "GB")) + 20
-  Int memory = ceil(4*size(kraken2_db, "GB"))
+  Int disk_size = ceil(size(read1, "GB") + size(read2, "GB") + 2*size(kraken2_db, "GB")) + 100
+  Int memory = ceil(2*size(kraken2_db, "GB"))
 
   command <<<
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee VERSION
