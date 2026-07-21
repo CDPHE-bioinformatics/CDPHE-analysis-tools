@@ -9,6 +9,7 @@ workflow Kraken2_PE_transfer {
         File? kraken2_unclassified_read1
         File? kraken2_classified_read2
         File? kraken2_unclassified_read2
+        File? bracken_report
         File krona_html
         String out_dir
     }
@@ -21,6 +22,7 @@ workflow Kraken2_PE_transfer {
             kraken2_unclassified_read1 = kraken2_unclassified_read1,
             kraken2_classified_read2 = kraken2_classified_read2,
             kraken2_unclassified_read2 = kraken2_unclassified_read2,
+            bracken_report = bracken_report,
             krona_html = krona_html,
             out_dir = out_dir
     }
@@ -39,6 +41,7 @@ task transfer_outputs {
         File? kraken2_classified_read1
         File? kraken2_unclassified_read2
         File? kraken2_classified_read2
+        File? bracken_report
         File? krona_html
 
     }
@@ -60,6 +63,7 @@ task transfer_outputs {
         gsutil -m cp ~{kraken2_classified_read1} ~{out_dir_path}/kraken2/
         gsutil -m cp ~{kraken2_unclassified_read2} ~{out_dir_path}/kraken2/
         gsutil -m cp ~{kraken2_classified_read2} ~{out_dir_path}/kraken2/
+        gsutil -m cp ~{bracken_report} ~{out_dir_path}/kraken2/
         gsutil -m cp ~{krona_html} ~{out_dir_path}/kraken2/
         
         transferdate=`date`
