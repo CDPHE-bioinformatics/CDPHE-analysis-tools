@@ -25,3 +25,6 @@ workflows:
  - name: Kraken2_PE_transfer
    subclass: WDL
    primaryDescriptorPath: /workflows/Kraken2_PE_transfer.wdl
+ - name: hostile
+   subclass: WDL
+   primaryDescriptorPath: /workflows/hostile.wdl
