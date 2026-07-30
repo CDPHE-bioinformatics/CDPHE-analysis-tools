@@ -31,12 +31,12 @@ task hostile {
     File? fastq2
     String seq_method
     Array[File] genome_index
+    Int disk_size = 100
+    Int cpu = 8
+    Int mem = 16
   }
 
   String docker = "staphb/hostile:2.0.2"
-  Int disk_size = 100
-  Int cpu = 4
-  Int mem = 16
 
   String base_name = basename(basename(basename(fastq1, ".gz"), ".fastq"), ".fq")
   String fastq1_scrubbed_name = base_name + "_scrubbed.fastq.gz"
