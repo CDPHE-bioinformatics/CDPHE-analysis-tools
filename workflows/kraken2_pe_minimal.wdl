@@ -1,4 +1,4 @@
-version 1.0
+version 1.1
 
 # Modified from Theiagen's Kraken2 workflow with dynamic disk and memory and only outputting Kraken report:
 # https://github.com/theiagen/public_health_bioinformatics/blob/81b0e35fa0e74fee4a7079fc7e275182ef26bee9/workflows/standalone_modules/wf_kraken2_pe.wdl#L4
