@@ -102,6 +102,7 @@ task kraken2 {
       cpu: cpu
       disks: "local-disk " + disk_size + " SSD"
       preemptible: 0
+      maxRetries: 1
   }
 }
 
